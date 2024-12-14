@@ -6,8 +6,8 @@ void kamp_alani_alt_secenekler();
 void sifahaneye_git_alt_secenekler();
 void hana_git_alt_secenekler();
 void maceraya_atil_alt_secenekler();
-void durumu_goster(char* isim, char* calgi_adi, int* para, int* tecrube, int* can, int* tokluk, int* uyku, int* guc, int* ceviklik, int* dayan�kl�l�k, int* karizma, int* toplayicilik_becerisi);
-void uyu(int* uyku_seviyesi);
+void durumu_goster(char* isim, char* calgi_adi, int* para, int* tecrube, int* can, int* tokluk, int* uyku, int* guc, int* ceviklik, int* dayaniklilik, int* karizma, int* toplayicilik_becerisi);
+void uyu(int* uyku_seviyesi, int miktar);
 void karizma(int* karizma_seviyesi);
 void can(int* saglik_degeri);
 void tokluk(int* aclik_seviyesi);
@@ -174,7 +174,7 @@ void can(int* saglik_degeri, int miktar) {
 		}
 	}
 }
-void tokluk(int* aclik_seviyesi) {
+void tokluk(int* aclik_seviyesi, int miktar) {
 	if (*aclik_seviyesi > 100) {
 		printf("aclik degeri 100'den buyuk olamaz.\n");
 	}
@@ -185,7 +185,7 @@ void tokluk(int* aclik_seviyesi) {
 		}
 	}
 }
-void su_degeri(int* su_degeri) {
+void su_degeri(int* su_degeri, int miktar) {
 	if (*su_degeri > 100) {
 		printf("su degeri 100'den buyuk olamaz.\n");
 	}
@@ -197,7 +197,7 @@ void su_degeri(int* su_degeri) {
 	}
 }
 
-void eglence_degeri(int* eglence_degeri) {
+void eglence_degeri(int* eglence_degeri, int miktar) {
 	if (*eglence_degeri > 100) {
 		printf("eglence degeri 100'den buyuk olamaz.\n");
 	}
@@ -209,7 +209,7 @@ void eglence_degeri(int* eglence_degeri) {
 	}
 }
 
-void moral_degeri(int* moral_degeri) {
+void moral_degeri(int* moral_degeri, int miktar) {
 	if (*moral_degeri > 100) {
 		printf("moral degeri 100'den buyuk olamaz.\n");
 	}
@@ -221,7 +221,7 @@ void moral_degeri(int* moral_degeri) {
 	}
 }
 
-void hijyen(int* hijyen_seviyesi) {
+void hijyen(int* hijyen_seviyesi, int miktar) {
 	if (*hijyen_seviyesi > 100) {
 		printf("hijyen degeri 100'den buyuk olamaz.\n");
 	}
@@ -249,17 +249,54 @@ void tecrube(int* tecrube_degeri, int miktar) {
 		seviye_atla();
 	}
 }
-void guc(int* guc_degeri) {
-	
+void guc(int* guc_degeri, int miktar) {
+	if (*guc_degeri > 25) {
+		printf("karizma degeri 25'den buyuk olamaz.\n");
+	}
+	else {
+		*guc_degeri += miktar;
+		if (*guc_degeri > 25) {
+			*guc_degeri = 25;
+		}
+	}
+	printf("karizma seviyesi: %d", *guc_degeri);
 }
-void ceviklik(int* ceviklik_degeri) {
-	
+void ceviklik(int* ceviklik_degeri, int miktar) {
+	if (*ceviklik_degeri > 25) {
+		printf("karizma degeri 25'den buyuk olamaz.\n");
+	}
+	else {
+		*ceviklik_degeri += miktar;
+		if (*ceviklik_degeri > 25) {
+			*ceviklik_degeri = 25;
+		}
+	}
+	printf("karizma seviyesi: %d", *ceviklik_degeri);
 }
-void dayaniklilik(int* dayaniklilik_degeri) {
-	
+void dayaniklilik(int* dayaniklilik_degeri, int miktar) {
+	if (*dayaniklilik_degeri > 25) {
+		printf("karizma degeri 25'den buyuk olamaz.\n");
+	}
+	else {
+		*dayaniklilik_degeri += miktar;
+		if (*dayaniklilik_degeri > 25) {
+			*dayaniklilik_degeri = 25;
+		}
+	}
+	printf("karizma seviyesi: %d", *dayaniklilik_degeri);
 }
-void toplayicilik_becerisi(int* toplama_becerisi) {
-	
+void toplayicilik_becerisi(int* toplama_becerisi, int miktar) {
+	if (*toplama_becerisi > 25) {
+		printf("karizma degeri 25'den buyuk olamaz.\n");
+	}
+	else {
+		*toplama_becerisi += miktar;
+		if (*toplama_becerisi > 25) {
+			*toplama_becerisi = 25;
+		}
+	}
+	printf("karizma seviyesi: %d", *toplayicilik_becerisi);
+
 }
 
 void kampa_git(int* can_degeri, int* tecrube_degeri, int* karizma_degeri, int* uyku_degeri, int* guc_degeri, int* ceviklik_degeri, int* dayaniklilik_degeri, int* secim) {
@@ -271,18 +308,18 @@ void kampa_git(int* can_degeri, int* tecrube_degeri, int* karizma_degeri, int* u
 		scanf("%d", &alt_secim);
 		switch (alt_secim) {
 		case 1:
-			tecrube(tecrube_degeri);
-			karizma(karizma_degeri);
+			tecrube(tecrube_degeri, 10);
+			karizma(karizma_degeri, 10);
 			break;
 		case 2:
-			can(can_degeri);
-			tecrube(tecrube_degeri);
+			can(can_degeri, 10);
+			tecrube(tecrube_degeri, 10);
 			break;
 		case 3:
 			uyu(uyku_degeri, can_degeri);
-			guc(guc_degeri);
-			ceviklik(ceviklik_degeri);
-			dayaniklilik(dayaniklilik_degeri);
+			guc(guc_degeri, 10);
+			ceviklik(ceviklik_degeri, 10);
+			dayaniklilik(dayaniklilik_degeri, 10);
 			break;
 		case 4:
 			menu_yazdir(secim);
@@ -291,7 +328,7 @@ void kampa_git(int* can_degeri, int* tecrube_degeri, int* karizma_degeri, int* u
 	}
 }
 
-void sifahaneye_git(int* moral_degeri, int* can_degeri, int* ceviklik_degeri, int* dayaniklilik_degeri, int* guc_degeri, int* para_degeri, int* eglence_degeri, int* moral_degeri, int* secim) {
+void sifahaneye_git(int* moral_degeri, int* can_degeri, int* ceviklik_degeri, int* dayaniklilik_degeri, int* guc_degeri, int* para_degeri, int* eglence_degeri, int* secim) {
 	if (secim == 2) {
 		printf("sifahaneye gidiyorsunuz...");
 		sifahaneye_git_alt_secenekler();
@@ -300,20 +337,20 @@ void sifahaneye_git(int* moral_degeri, int* can_degeri, int* ceviklik_degeri, in
 		scanf("%d", &alt_secim);
 		switch (alt_secim) {
 		case 1:
-			can(&can_degeri);
-			ceviklik(&ceviklik_degeri);
-			dayaniklilik(&dayaniklilik_degeri);
-			guc(&guc_degeri);
-			para(&para_degeri);
-			moral(&moral_degeri);
+			can(&can_degeri, 10);
+			ceviklik(&ceviklik_degeri, 10);
+			dayaniklilik(&dayaniklilik_degeri, 10);
+			guc(&guc_degeri, 10);
+			para(&para_degeri, 10);
+			moral(&moral_degeri, 10);
 			break;
 		case 2:
-			can(&can_degeri);
-			ceviklik(&ceviklik_degeri);
-			dayaniklilik(&dayaniklilik_degeri);
-			guc(&guc_degeri);
-			para(&para_degeri);
-			moral(&moral_degeri);
+			can(&can_degeri, 10);
+			ceviklik(&ceviklik_degeri, 10);
+			dayaniklilik(&dayaniklilik_degeri, 10);
+			guc(&guc_degeri, 10);
+			para(&para_degeri, 10);
+			moral(&moral_degeri, 10);
 			break;
 		case 3:
 			menu_yazdir(&secim);
@@ -331,25 +368,25 @@ void hana_git(int* para_degeri, int* tokluk_degeri, int* can_degeri, int* cevikl
 		scanf("%d", &alt_secim);
 		switch (alt_secim) {
 		case 1:
-			para(&para_degeri);
-			tokluk(&tokluk_degeri);
-			can(&can_degeri);
-			ceviklik(&ceviklik_degeri);
-			dayaniklilik(&dayaniklilik_degeri);
-			guc(&guc_degeri);
+			para(&para_degeri, 10);
+			tokluk(&tokluk_degeri, 10);
+			can(&can_degeri, 10);
+			ceviklik(&ceviklik_degeri, 10);
+			dayaniklilik(&dayaniklilik_degeri, 10);
+			guc(&guc_degeri, 10);
 			break;
 		case 2:
-			para(&para_degeri);
-			can(&can_degeri);
-			ceviklik(&ceviklik_degeri);
-			dayaniklilik(&dayaniklilik_degeri);
-			tokluk(&tokluk_degeri);
-			guc(&guc_degeri);
-			karizma(&karizma_degeri);
+			para(&para_degeri, 10);
+			can(&can_degeri, 10);
+			ceviklik(&ceviklik_degeri, 10);
+			dayaniklilik(&dayaniklilik_degeri, 10);
+			tokluk(&tokluk_degeri, 10);
+			guc(&guc_degeri, 10);
+			karizma(&karizma_degeri, 10);
 			break;
 		case 3:
-			tecrube(&tecrube_degeri);
-			karizma(&karizma_degeri);
+			tecrube(&tecrube_degeri, 10);
+			karizma(&karizma_degeri, 10);
 		case 4:
 			menu_yazdir(&secim);
 			break;
@@ -366,26 +403,26 @@ void maceraya_atil(int* para_degeri, int* tecrube_degeri, int* can_degeri, int* 
 		scanf("%d", &alt_secim);
 		switch (alt_secim) {
 		case 1:
-			toplayicilik_becerisi(&toplayicilik_becerisi_degeri);
-			can(&can_degeri);
-			tecrube(&tecrube_degeri);
-			dayaniklilik(&dayaniklilik_degeri);
-			ceviklik(&ceviklik_degeri);
-			tokluk(&tokluk_degeri);
-			uyu(&uyku_degeri);
-			guc(&guc_degeri);
+			toplayicilik_becerisi(&toplayicilik_becerisi_degeri, 10);
+			can(&can_degeri, 10);
+			tecrube(&tecrube_degeri, 10);
+			dayaniklilik(&dayaniklilik_degeri, 10);
+			ceviklik(&ceviklik_degeri, 10);
+			tokluk(&tokluk_degeri, 10);
+			uyu(&uyku_degeri, 10);
+			guc(&guc_degeri, 10);
 			break;
 		case 2:
-			tecrube(&tecrube_degeri);
-			para(&para_degeri);
+			tecrube(&tecrube_degeri, 10);
+			para(&para_degeri, 10);
 			break;
 		case 3:
-			tecrube(&tecrube_degeri);
-			para(&para_degeri);
+			tecrube(&tecrube_degeri, 10);
+			para(&para_degeri, 10);
 			break;
 		case 4:
-			tecrube(&tecrube_degeri);
-			para(&para_degeri);
+			tecrube(&tecrube_degeri, 10);
+			para(&para_degeri, 10);
 			break;
 		case 5:
 			menu_yazdir(&secim);
