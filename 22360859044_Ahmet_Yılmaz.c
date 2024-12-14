@@ -1,28 +1,50 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void menu_yazdir();
 void kamp_alani_alt_secenekler();
 void sifahaneye_git_alt_secenekler();
 void hana_git_alt_secenekler();
 void maceraya_atil_alt_secenekler();
-void durumu_goster(char* isim, char* calgi_adi, int* para, int* tecrube, int* can, int* tokluk, int* uyku, int* guc, int* ceviklik, int* dayanıklılık, int* karizma, int* toplayicilik_becerisi);
-int uyu(int* uyku_seviyesi);
-int karizma(int* karizma_seviyesi);
-
+void durumu_goster(char* isim, char* calgi_adi, int* para, int* tecrube, int* can, int* tokluk, int* uyku, int* guc, int* ceviklik, int* dayanï¿½klï¿½lï¿½k, int* karizma, int* toplayicilik_becerisi);
+void uyu(int* uyku_seviyesi);
+void karizma(int* karizma_seviyesi);
+void can(int* saglik_degeri);
+void tokluk(int* aclik_seviyesi);
+void su_degeri(int* su_degeri);
+void hijyen(int* hijyen_seviyesi);
+void para(int* para_seviyesi);
+void tecrube(int* tecrube_degeri);
+void guc(int* guc_degeri);
+void ceviklik(int* ceviklik_degeri);
+void dayaniklilik(int* dayaniklilik_degeri);
+void toplayicilik_becerisi(int* toplama_becerisi);
+void eglence_degeri(int* eglence_degeri);
+void moral_degeri(int* moral_degeri);
+void kampa_git(int* uyku_degeri, int* guc_degeri, int* ceviklik_degeri, int* dayaniklilik_degeri);
+void sifahaneye_git(int* para_degeri, int* hijyen_degeri, int* eglence_degeri, int* moral_degeri);
+void hana_git(int* para_degeri, int* su_degeri, int* tokluk_degeri, int* can_degeri, int* ceviklik_degeri, int* dayaniklilik_degeri);
+void maceraya_atil(int* para_degeri, int* tecrube_degeri, int* can_degeri, int* tokluk_degeri, int* ceviklik_degeri, int* dayaniklilik_degeri);
+void oyundan_cik(int* secim);
+void seviye_atla();
 
 void main() {
 	char ozan_adi[20];
 	char calgi_adi[20];
-	int para = 50;
-	int tecrube = 50;
-	int can_degeri = 50;					// temel nitelik
-	int tokluk = 50;						// temel nitelik
-	int uyku = 50;
-	int guc = 3;							// beceri
-	int ceviklik = 3;						// beceri
-	int dayanıklılık = 3;					// beceri
-	int karizma = 3;						// beceri
-	int toplayıcılık_becerisi = 50;
+	int para_degeri = 10;
+	int tecrube_degeri = 50;
+	int can_degeri = 50;						// temel nitelik
+	int tokluk_degeri = 50;						// temel nitelik
+	int su_degeri = 50;							// temel nitelik
+	int uyku_degeri = 50;
+	int hijyen_degeri = 50;
+	int eglence_degeri = 50;
+	int moral_degeri = 50;
+	int guc_degeri = 3;							// beceri
+	int ceviklik_degeri = 3;					// beceri
+	int dayaniklilik_degeri = 3;				// beceri
+	int karizma_degeri = 3;						// beceri
+	int toplayicilik_becerisi_degeri = 50;
 
 	printf("Ozan'in adini giriniz: ");
 	gets(ozan_adi);
@@ -33,97 +55,22 @@ void main() {
 
 	int secim;
 	while (1) {
-		menu_yazdir();
-		printf("menuden bir gorev seciniz");
-		scanf("%d", &secim)
-		
-		if (secim == 1) {
-			printf("Kamp alanina gidiyorsunuz...\n");
-			kamp_alani_alt_secenekler();
-			int alt_secim;
-			printf("kamp alaninda ne yapmak istiyorsunuz? ");
-			scanf("%d", &alt_secim);
-			switch (alt_secim) {
-			case 1:
-				tecrube_arttir();
-				karizma 
-				break;
-			case 2:
-				karizma_arttir();
-				break;
-			case 3:
-				uyu();
-				break;
-			case 4:
-				menu_yazdir();
-				break;
-			}
-		}
-		else if (secim == 2) {
-			printf("sifahaneye gidiyorsunuz...");
-			sifahaneye_git_alt_secenekler();
-			int alt_secim;
-			printf("sifahane de ne yapmak istiyorsunuz? ");
-			scanf("%d", &alt_secim);
-			switch (alt_secim) {
-			case 1:
-				can_arttir();
-				break;
-			case 2:
-				can_arttir();
-				break;
-			case 3:
-				menu_yazdir();
-				break;
-			}
-		}
-		else if (secim == 3) {
-			printf("hana gidiyorsunuz...");
-			hana_git_alt_secenekler();
-			int alt_secim;
-			printf("han	da ne yapmak istiyorsunuz? ");
-			scanf("%d", &alt_secim);
-			switch (alt_secim) {
-			case 1:
-				para_azalt();
-				tokluk_arttir();
-				can_arttir();
-				break;
-			case 2:
-				para_azalt();
-				tokluk_arttir();
-				can_arttir();
-				break;
-			case 3:
-				tecrube_arttir();
-			case 4:
-				menu_yazdir();
-				break;
-			}
-		}
-		else if (secim == 4) {
-			printf("maceraya katiliyorsunuz...");
-			maceraya_atil_alt_secenekler();
-			int alt_secim;
-			printf("nasıl bir maceraya katilmak istiyorsunuz? ");
-			scanf("%d", &alt_secim);
-			switch (alt_secim) {
-			case 1:
-				tecrube_arttir();
-				can_arttir();
-				toplayıcılık_becerisi_arttir();
-			case 2:
-			case 3:
-			case 4:
-			case 5:
-			}
-		}
-		else if (secim == 5) {
-			durumu_goster();
-		}
-		else if (secim == 6) {
+		menu_yazdir(&secim);
 
+		kampa_git(&can_degeri, &tecrube_degeri, &karizma_degeri, &uyku_degeri, &guc_degeri, &ceviklik_degeri, &dayaniklilik_degeri, &secim);
+		
+		sifahaneye_git(&moral_degeri, &can_degeri, &ceviklik_degeri, &dayaniklilik_degeri, &guc_degeri, &para_degeri, &eglence_degeri, &moral_degeri, &secim);
+
+		hana_git(&para_degeri, &tokluk_degeri, &can_degeri, &ceviklik_degeri, &dayaniklilik_degeri, &guc_degeri, &karizma_degeri, &tecrube_degeri, &secim);
+
+		maceraya_atil(&para_degeri, &tecrube_degeri, &can_degeri, &tokluk_degeri, &ceviklik_degeri, &dayaniklilik_degeri, &toplayicilik_becerisi_degeri, &uyku_degeri, &guc_degeri, &secim);
+		
+		if (secim == 5) {
+			durumu_goster(ozan_adi, calgi_adi, &para_degeri, &tecrube_degeri, &can_degeri, &tokluk_degeri, &uyku_degeri, &guc_degeri, &ceviklik_degeri, &dayaniklilik_degeri, &karizma_degeri, &toplayicilik_becerisi_degeri);
 		}
+		// else if (secim == 6) {
+
+		// }
 		else if (secim == 7) {
 			printf("Cikmak istediginizden emin misiniz? (E/H)");
 			scanf("%d", &secim);
@@ -132,40 +79,42 @@ void main() {
 		}
 		else{
 			printf("gecersiz secim yaptiniz yeniden seciniz.\n");
-			menu_yazdir();
+			menu_yazdir(&secim);
 		}
 	}
 }
 
 
-void menu_yazdir() {
+void menu_yazdir(int* secim) {
 	printf("**********MENU**********\n\n1-kamp alanina git\n2-sifahaneye git\n3-hana git\n4-maceraya katil\n5-seviye atla\n6-Durumu goster\n7-oyundan cik\n");
+	printf("menuden bir gorev seciniz");
+	scanf("%d", &secim);
 }
 void kamp_alani_alt_secenekler() {
-	printf("1. Kamp ateşinin başında çalgı çal/şarkı söyle.\n");
-	printf("2. Nehirde yıkan.\n");
-	printf("3. Çadırına girip uyu.\n");
-	printf("4. Köy meydanına dön.\n");
+	printf("1. Kamp atesinin basinda calgi cal/sarki soyle.\n");
+	printf("2. Nehirde yikan.\n");
+	printf("3. cadirina girip uyu.\n");
+	printf("4. Koy meydanina don.\n");
 }
 void sifahaneye_git_alt_secenekler() {
-	printf("1. Şifacıdan yaralarını sarmasını iste.\n");
-	printf("2. Şifacıdan merhem yapıp sürmesini iste.\n");
-	printf("3. Köy meydanına dön.\n");
+	printf("1. sifacidan yaralarini sarmasini iste.\n");
+	printf("2. sifacidan merhem yapip surmesini iste.\n");
+	printf("3. Koy meydanina don.\n");
 }
 void hana_git_alt_secenekler() {
-	printf("1. Yiyecek satın al ve ye.\n");
-	printf("2. İçecek satın al, iç ve eğlen.\n");
-	printf("3. Enstrüman çal ve şarkı söyle.\n");
-	printf("4. Köy meydanına dön.\n");
+	printf("1. Yiyecek satin al ve ye.\n");
+	printf("2. icecek satin al, ic ve eglen.\n");
+	printf("3. Enstruman cal ve sarki soyle.\n");
+	printf("4. Koy meydanina don.\n");
 }
 void maceraya_atil_alt_secenekler() {
-	printf("1. Yakın çevreden şifalı bitki topla ve avlan.\n");
-	printf("2. Ormanı keşfe çık (kolay).\n");
-	printf("3. Kayalıkları keşfe çık (orta).\n");
-	printf("4. Vadiyi keşfe çık (zor).\n");
-	printf("5. Köy meydanına dön.\n");
+	printf("1. Yakin cevreden sifali bitki topla ve avlan.\n");
+	printf("2. Ormani kesfe cik (kolay).\n");
+	printf("3. Kayaliklari kesfe cik (orta).\n");
+	printf("4. Vadiyi kesfe cik (zor).\n");
+	printf("5. Koy meydanina don.\n");
 }
-void durumu_goster(char* isim, char* calgi_adi, int* para, int* tecrube, int* can, int* tokluk, int* uyku, int* guc, int* ceviklik, int* dayanıklılık, int* karizma, int* toplayicilik_becerisi) {
+void durumu_goster(char* isim, char* calgi_adi, int* para, int* tecrube, int* can, int* tokluk, int* uyku, int* guc, int* ceviklik, int* dayaniklilik, int* karizma, int* toplayicilik_becerisi) {
 	printf("isim: %s\n", *isim);
 	printf("calgi adi: %s\n", *calgi_adi);
 	printf("para: %d\n", *para);
@@ -181,36 +130,270 @@ void durumu_goster(char* isim, char* calgi_adi, int* para, int* tecrube, int* ca
 
 }
 
-int uyu(int* uyku_seviyesi) {
-	return;
+void uyu(int* uyku_seviyesi, int miktar) {
+	if(*uyku_seviyesi > 100) {
+		printf("uyku seviyesi 100'den buyuk olamaz.\n");
+	}
+	/*else if (*uyku_seviyesi <= 20) {
+		printf("uyku seviyesi 20'nin altina dÃ¼stÃ¼.\n");
+	}
+	else if (*uyku_seviyesi < 0) {
+		*uyku_seviyesi = 0;
+	}
+	else if (*uyku_seviyesi == 0) {
+		*can_degeri -= 10;
+	}*/											// bunlarÄ± burada kontrol etmek mantÄ±ksÄ±z.
+	else {
+		*uyku_seviyesi += miktar;
+		if(*uyku_seviyesi > 100) {
+			*uyku_seviyesi = 100;
+		}
+	}
+	printf("uyku seviyesi: %d\n", *uyku_seviyesi);
 }
-int karizma(int* karizma_seviyesi) {
-	return;
+void karizma(int* karizma_seviyesi, int miktar) {
+	if (*karizma_seviyesi > 25) {
+		printf("karizma degeri 25'den buyuk olamaz.\n");
+	}
+	else {
+		*karizma_seviyesi += miktar;
+		if (*karizma_seviyesi > 25) {
+			*karizma_seviyesi = 25;
+		}
+	}
+	printf("karizma seviyesi: %d", *karizma_seviyesi);
 }
-int can(int* saglik_degeri) {
-	return;
+void can(int* saglik_degeri, int miktar) {
+	if (*saglik_degeri > 100) {
+		printf("saglik degeri 100'den buyuk olamaz.\n");
+	}
+	else {
+		*saglik_degeri += miktar;
+		if (*saglik_degeri > 100) {
+			*saglik_degeri = 100;
+		}
+	}
 }
-int tokluk(int* aclik_seviyesi) {
-	return;
+void tokluk(int* aclik_seviyesi) {
+	if (*aclik_seviyesi > 100) {
+		printf("aclik degeri 100'den buyuk olamaz.\n");
+	}
+	else {
+		*aclik_seviyesi += miktar;
+		if (*aclik_seviyesi > 100) {
+			*aclik_seviyesi = 100;
+		}
+	}
 }
-int hijyen(int* hijyen_seviyesi) {
-	return;
+void su_degeri(int* su_degeri) {
+	if (*su_degeri > 100) {
+		printf("su degeri 100'den buyuk olamaz.\n");
+	}
+	else {
+		*su_degeri += miktar;
+		if (*su_degeri > 100) {
+			*su_degeri = 100;
+		}
+	}
 }
-int money(int* para_seviyesi) {
-	return;
+
+void eglence_degeri(int* eglence_degeri) {
+	if (*eglence_degeri > 100) {
+		printf("eglence degeri 100'den buyuk olamaz.\n");
+	}
+	else {
+		*eglence_degeri += miktar;
+		if (*eglence_degeri > 100) {
+			*eglence_degeri = 100;
+		}
+	}
 }
-int tecrube(int* tecrube_degeri) {
-	return;
+
+void moral_degeri(int* moral_degeri) {
+	if (*moral_degeri > 100) {
+		printf("moral degeri 100'den buyuk olamaz.\n");
+	}
+	else {
+		*moral_degeri += miktar;
+		if (*moral_degeri > 100) {
+			*moral_degeri = 100;
+		}
+	}
 }
-int guc(int* guc_degeri) {
-	return;
+
+void hijyen(int* hijyen_seviyesi) {
+	if (*hijyen_seviyesi > 100) {
+		printf("hijyen degeri 100'den buyuk olamaz.\n");
+	}
+	else {
+		*hijyen_seviyesi += miktar;
+		if (*hijyen_seviyesi > 100) {
+			*hijyen_seviyesi = 100;
+		}
+	}
 }
-int ceviklik(int* ceviklik_degeri) {
-	return;
+void para(int* para_seviyesi, int miktar) {
+	*para_seviyesi += miktar;
 }
-int dayaniklilik(int* dayaniklilik_degeri) {
-	return;
+void tecrube(int* tecrube_degeri, int miktar) {
+	if (*tecrube_degeri > 100) {
+		printf("tecrube degeri 100'den buyuk olamaz.\n");
+	}
+	else {
+		*tecrube_degeri += miktar;
+		if (*tecrube_degeri > 100) {
+			*tecrube_degeri = 100;
+		}
+	}
+	if (tecrube == 100) {
+		seviye_atla();
+	}
 }
-int toplayicilik_becerisi(int* toplama_becerisi) {
-	return;
+void guc(int* guc_degeri) {
+	
+}
+void ceviklik(int* ceviklik_degeri) {
+	
+}
+void dayaniklilik(int* dayaniklilik_degeri) {
+	
+}
+void toplayicilik_becerisi(int* toplama_becerisi) {
+	
+}
+
+void kampa_git(int* can_degeri, int* tecrube_degeri, int* karizma_degeri, int* uyku_degeri, int* guc_degeri, int* ceviklik_degeri, int* dayaniklilik_degeri, int* secim) {
+	if (secim == 1) {
+		printf("Kamp alanina gidiyorsunuz...\n");
+		kamp_alani_alt_secenekler();
+		int alt_secim;
+		printf("kamp alaninda ne yapmak istiyorsunuz? ");
+		scanf("%d", &alt_secim);
+		switch (alt_secim) {
+		case 1:
+			tecrube(tecrube_degeri);
+			karizma(karizma_degeri);
+			break;
+		case 2:
+			can(can_degeri);
+			tecrube(tecrube_degeri);
+			break;
+		case 3:
+			uyu(uyku_degeri, can_degeri);
+			guc(guc_degeri);
+			ceviklik(ceviklik_degeri);
+			dayaniklilik(dayaniklilik_degeri);
+			break;
+		case 4:
+			menu_yazdir(secim);
+			break;
+		}
+	}
+}
+
+void sifahaneye_git(int* moral_degeri, int* can_degeri, int* ceviklik_degeri, int* dayaniklilik_degeri, int* guc_degeri, int* para_degeri, int* eglence_degeri, int* moral_degeri, int* secim) {
+	if (secim == 2) {
+		printf("sifahaneye gidiyorsunuz...");
+		sifahaneye_git_alt_secenekler();
+		int alt_secim;
+		printf("sifahane de ne yapmak istiyorsunuz? ");
+		scanf("%d", &alt_secim);
+		switch (alt_secim) {
+		case 1:
+			can(&can_degeri);
+			ceviklik(&ceviklik_degeri);
+			dayaniklilik(&dayaniklilik_degeri);
+			guc(&guc_degeri);
+			para(&para_degeri);
+			moral(&moral_degeri);
+			break;
+		case 2:
+			can(&can_degeri);
+			ceviklik(&ceviklik_degeri);
+			dayaniklilik(&dayaniklilik_degeri);
+			guc(&guc_degeri);
+			para(&para_degeri);
+			moral(&moral_degeri);
+			break;
+		case 3:
+			menu_yazdir(&secim);
+			break;
+		}
+	}
+}
+
+void hana_git(int* para_degeri, int* tokluk_degeri, int* can_degeri, int* ceviklik_degeri, int* dayaniklilik_degeri, int* guc_degeri, int* karizma_degeri, int* tecrube_degeri, int* secim) {
+	if (secim == 3) {
+		printf("hana gidiyorsunuz...");
+		hana_git_alt_secenekler();
+		int alt_secim;
+		printf("han	da ne yapmak istiyorsunuz? ");
+		scanf("%d", &alt_secim);
+		switch (alt_secim) {
+		case 1:
+			para(&para_degeri);
+			tokluk(&tokluk_degeri);
+			can(&can_degeri);
+			ceviklik(&ceviklik_degeri);
+			dayaniklilik(&dayaniklilik_degeri);
+			guc(&guc_degeri);
+			break;
+		case 2:
+			para(&para_degeri);
+			can(&can_degeri);
+			ceviklik(&ceviklik_degeri);
+			dayaniklilik(&dayaniklilik_degeri);
+			tokluk(&tokluk_degeri);
+			guc(&guc_degeri);
+			karizma(&karizma_degeri);
+			break;
+		case 3:
+			tecrube(&tecrube_degeri);
+			karizma(&karizma_degeri);
+		case 4:
+			menu_yazdir(&secim);
+			break;
+		}
+	}
+}	
+
+void maceraya_atil(int* para_degeri, int* tecrube_degeri, int* can_degeri, int* tokluk_degeri, int* ceviklik_degeri, int* dayaniklilik_degeri, int* toplayicilik_becerisi_degeri, int* uyku_degeri, int* guc_degeri, int* secim) {
+	if (secim == 4) {
+		printf("maceraya katiliyorsunuz...");
+		maceraya_atil_alt_secenekler();
+		int alt_secim;
+		printf("nasil bir maceraya katilmak istiyorsunuz? ");
+		scanf("%d", &alt_secim);
+		switch (alt_secim) {
+		case 1:
+			toplayicilik_becerisi(&toplayicilik_becerisi_degeri);
+			can(&can_degeri);
+			tecrube(&tecrube_degeri);
+			dayaniklilik(&dayaniklilik_degeri);
+			ceviklik(&ceviklik_degeri);
+			tokluk(&tokluk_degeri);
+			uyu(&uyku_degeri);
+			guc(&guc_degeri);
+			break;
+		case 2:
+			tecrube(&tecrube_degeri);
+			para(&para_degeri);
+			break;
+		case 3:
+			tecrube(&tecrube_degeri);
+			para(&para_degeri);
+			break;
+		case 4:
+			tecrube(&tecrube_degeri);
+			para(&para_degeri);
+			break;
+		case 5:
+			menu_yazdir(&secim);
+			break;
+		}
+	}
+}
+
+void seviye_atla() {
+
 }
