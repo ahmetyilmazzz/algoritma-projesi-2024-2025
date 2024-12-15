@@ -33,17 +33,17 @@ void main() {
 	char calgi_adi[20];
 	int para_degeri = 10;
 	int tecrube_degeri = 50;
-	int can_degeri = 50;						// temel nitelik
-	int tokluk_degeri = 50;						// temel nitelik
-	int su_degeri = 50;							// temel nitelik
+	int can_degeri = 50;						
+	int tokluk_degeri = 50;						
+	int su_degeri = 50;							
 	int uyku_degeri = 50;
 	int hijyen_degeri = 50;
 	int eglence_degeri = 50;
 	int moral_degeri = 50;
-	int guc_degeri = 3;							// beceri
-	int ceviklik_degeri = 3;					// beceri
-	int dayaniklilik_degeri = 3;				// beceri
-	int karizma_degeri = 3;						// beceri
+	int guc_degeri = 3;							
+	int ceviklik_degeri = 3;					
+	int dayaniklilik_degeri = 3;				
+	int karizma_degeri = 3;						
 	int toplayicilik_becerisi_degeri = 50;
 
 	printf("Ozan'in adini giriniz: ");
@@ -174,7 +174,25 @@ void can(int* saglik_degeri, int miktar) {
 		}
 	}
 }
-void tokluk(int* aclik_seviyesi, int miktar) {
+void tokluk(int* aclik_seviyesi, int* para, int miktar) {
+	int secim;
+	printf("acligi nasil gidermek istersiniz?\n1. ekmek ye (2 altin, +10 tokluk)\n2. yahni ye (10 altin, +50 tokluk)\n3. elma ye (1 altin, +5 tokluk)\n");
+	scanf("%d", &secim);
+	switch (secim) {
+		case 1:
+			*para -= 2;
+			*tokluk += 10;
+			break;
+		case 2:
+			*para -= 10;
+			*tokluk += 50;
+			break;
+		case 3:
+			*para -= 1;
+			*tokluk += 5;
+		default:
+			printf("gecersiz islem yaptiniz.");
+	}
 	if (*aclik_seviyesi > 100) {
 		printf("aclik degeri 100'den buyuk olamaz.\n");
 	}
