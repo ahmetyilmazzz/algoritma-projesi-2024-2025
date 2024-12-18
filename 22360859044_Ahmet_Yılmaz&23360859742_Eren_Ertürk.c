@@ -497,6 +497,10 @@ void maceraya_atil(Ozan ozan, int* secim) {
 
 void seviye_atla(Ozan* ozan) {
 	if (ozan->tecrube_degeri == 100) {
-		// burayı sıfırlamalasın
+		ozan->tecrube_degeri = 0;
+		ozan->dayaniklilik_degeri = 0;
+		ozan->guc_degeri = 0;
+		ozan->karizma_degeri = 0;
+		ozan->toplayicilik_becerisi_degeri = 0;
 	}
 }
