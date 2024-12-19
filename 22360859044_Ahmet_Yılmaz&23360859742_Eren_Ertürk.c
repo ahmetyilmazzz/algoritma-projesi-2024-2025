@@ -1,5 +1,3 @@
-// bazı nitelikler artarken bazıları azalmalı bunları spesifik olarak belirtilen fonksiyonların içerisinde yap.
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,27 +6,27 @@ void kamp_alani_alt_secenekler();
 void sifahaneye_git_alt_secenekler();
 void hana_git_alt_secenekler();
 void maceraya_atil_alt_secenekler();
-void durumu_goster(char* isim, char* calgi_adi, int* para, int* tecrube, int* can, int* tokluk, int* uyku, int* guc, int* ceviklik, int* dayaniklilik, int* karizma, int* toplayicilik_becerisi);
-void uyu(int* uyku_seviyesi, int miktar);
-void karizma(int* karizma_seviyesi);
-void can(int* saglik_degeri);
-void tokluk(int* aclik_seviyesi);
-void su_degeri(int* su_degeri);
-void hijyen(int* hijyen_seviyesi);
-void para(int* para_seviyesi);
-void tecrube(int* tecrube_degeri);
-void guc(int* guc_degeri);
-void ceviklik(int* ceviklik_degeri);
-void dayaniklilik(int* dayaniklilik_degeri);
-void toplayicilik_becerisi(int* toplama_becerisi);
-void eglence_degeri(int* eglence_degeri);
-void moral_degeri(int* moral_degeri);
-void kampa_git(int* uyku_degeri, int* guc_degeri, int* ceviklik_degeri, int* dayaniklilik_degeri);
-void sifahaneye_git(int* para_degeri, int* hijyen_degeri, int* eglence_degeri, int* moral_degeri);
-void hana_git(int* para_degeri, int* su_degeri, int* tokluk_degeri, int* can_degeri, int* ceviklik_degeri, int* dayaniklilik_degeri);
-void maceraya_atil(int* para_degeri, int* tecrube_degeri, int* can_degeri, int* tokluk_degeri, int* ceviklik_degeri, int* dayaniklilik_degeri);
-void oyundan_cik(int* secim);
-void seviye_atla();
+void durumu_goster(Ozan* ozan);
+void uyu(Ozan* ozan, int saat);
+void karizma(Ozan* ozan, int miktar);
+void can(Ozan* ozan, int miktar);
+void tokluk(Ozan* ozan, int miktar);
+void su_degeri(Ozan* ozan, int miktar);
+void hijyen(Ozan* ozan, int miktar);
+void para(Ozan* ozan, int miktar);
+void tecrube(Ozan* ozan, int miktar);
+void guc(Ozan* ozan, int miktar);
+void ceviklik(Ozan* ozan, int miktar);
+void dayaniklilik(Ozan* ozan, int miktar);
+void toplayicilik_becerisi(Ozan* ozan, int miktar);
+void eglence_degeri(Ozan* ozan, int sure);
+void moral_degeri(Ozan* ozan, int miktar);
+void kampa_git(Ozan* ozan, int* secim);
+void sifahaneye_git(Ozan* ozan, int* secim);
+void hana_git(Ozan* ozan, int* secim);
+void maceraya_atil(Ozan* ozan, int* secim);
+//void oyundan_cik(int* secim);
+void seviye_atla(Ozan* ozan);
 
 typedef struct Ozan {
 	char ozan_adi[20];
@@ -44,16 +42,16 @@ typedef struct Ozan {
 	int moral_deger;
 	int toplayicilik_becerisi_degeri;
 	
-	int guc_degeri = 3;
-	int ceviklik_degeri = 3;
-	int dayaniklilik_degeri = 3;
-	int karizma_degeri = 3;
+	int guc_degeri;
+	int ceviklik_degeri;
+	int dayaniklilik_degeri;
+	int karizma_degeri;
 } Ozan;
 
 typedef struct Haydut {
-	int guc_degeri = 3;
-	int ceviklik_degeri = 3;
-	int dayaniklilik_degeri = 3;
+	int guc_degeri;
+	int ceviklik_degeri;
+	int dayaniklilik_degeri;
 } Haydut;
 
 void main() {
@@ -83,16 +81,16 @@ void main() {
 	while (1) {
 		menu_yazdir(&secim);
 
-		kampa_git(&ozan.can_degeri, &ozan.tecrube_degeri, &ozan.karizma_degeri, &ozan.uyku_degeri, &ozan.guc_degeri, &ozan.ceviklik_degeri, &ozan.dayaniklilik_degeri, &secim);
+		kampa_git(&ozan, &secim);
 		
-		sifahaneye_git(&ozan.moral_degeri, &ozan.can_degeri, &ozan.ceviklik_degeri, &ozan.dayaniklilik_degeri, &ozan.guc_degeri, &ozan.para_degeri, &ozan.eglence_degeri, &ozan.moral_degeri, &secim);
+		sifahaneye_git(&ozan, &secim);
 
-		hana_git(&ozan.para_degeri, &ozan.tokluk_degeri, &ozan.can_degeri, &ozan.ceviklik_degeri, &ozan.dayaniklilik_degeri, &ozan.guc_degeri, &ozan.karizma_degeri, &ozan.tecrube_degeri, &secim);
+		hana_git(&ozan, &secim);
 
-		maceraya_atil(&ozan.para_degeri, &ozan.tecrube_degeri, &ozan.can_degeri, &ozan.tokluk_degeri, &ozan.ceviklik_degeri, &ozan.dayaniklilik_degeri, &ozan.toplayicilik_becerisi_degeri, &ozan.uyku_degeri, &ozan.guc_degeri, &secim);
+		maceraya_atil(&ozan, &secim);
 		
 		if (secim == 5) {
-			durumu_goster(ozan_adi, calgi_adi, &para_degeri, &tecrube_degeri, &can_degeri, &tokluk_degeri, &uyku_degeri, &guc_degeri, &ceviklik_degeri, &dayaniklilik_degeri, &karizma_degeri, &toplayicilik_becerisi_degeri);
+			durumu_goster(&ozan);
 		}
 		// else if (secim == 6) {
 
@@ -107,258 +105,20 @@ void main() {
 			printf("gecersiz secim yaptiniz yeniden seciniz.\n");
 			menu_yazdir(&secim);
 		}
-		if(tokluk_degeri == 0) {
-			can_degeri -= 20;
+		if(ozan.tokluk_degeri == 0) {
+			ozan.can_degeri -= 20;
 		} 
-		if(su_degeri == 0) {
-			can_degeri -= 15;
+		if(ozan.su_degeri == 0) {
+			ozan.can_degeri -= 15;
 		}
-		if (uyku_degeri == 0) {
-			can_degeri -= 10
+		if (ozan.uyku_degeri == 0) {
+			ozan.can_degeri -= 10;
 		} 		
 		// her turdan sonra temel niteliklerin azalması gerekiyor bunu burada hallet.
 	}
 }
-
-
-void menu_yazdir(int* secim) {
-	printf("**********MENU**********\n\n1-kamp alanina git\n2-sifahaneye git\n3-hana git\n4-maceraya katil\n5-seviye atla\n6-Durumu goster\n7-oyundan cik\n");
-	printf("menuden bir gorev seciniz");
-	scanf("%d", &secim);
-}
-void kamp_alani_alt_secenekler() {
-	printf("1. Kamp atesinin basinda calgi cal/sarki soyle.\n");
-	printf("2. Nehirde yikan.\n");
-	printf("3. cadirina girip uyu.\n");
-	printf("4. Koy meydanina don.\n");
-}
-void sifahaneye_git_alt_secenekler() {
-	printf("1. sifacidan yaralarini sarmasini iste.\n");
-	printf("2. sifacidan merhem yapip surmesini iste.\n");
-	printf("3. Koy meydanina don.\n");
-}
-void hana_git_alt_secenekler() {
-	printf("1. Yiyecek satin al ve ye.\n");
-	printf("2. icecek satin al, ic ve eglen.\n");
-	printf("3. Enstruman cal ve sarki soyle.\n");
-	printf("4. Koy meydanina don.\n");
-}
-void maceraya_atil_alt_secenekler() {
-	printf("1. Yakin cevreden sifali bitki topla ve avlan.\n");
-	printf("2. Ormani kesfe cik (kolay).\n");
-	printf("3. Kayaliklari kesfe cik (orta).\n");
-	printf("4. Vadiyi kesfe cik (zor).\n");
-	printf("5. Koy meydanina don.\n");
-}
-void durumu_goster(char* isim, char* calgi_adi, int* para, int* tecrube, int* can, int* tokluk, int* uyku, int* guc, int* ceviklik, int* dayaniklilik, int* karizma, int* toplayicilik_becerisi) {
-	printf("isim: %s\n", *isim);
-	printf("calgi adi: %s\n", *calgi_adi);
-	printf("para: %d\n", *para);
-	printf("tecrube: %d\n", *para);
-	printf("can: %d\n", *para);
-	printf("tokluk: %d\n", *para);
-	printf("uyku: %d\n", *para);
-	printf("guc: %d\n", *para);
-	printf("ceviklik: %d\n", *para);
-	printf("dayaniklilik: %d\n", *para);
-	printf("karizma: %d\n", *para);
-	printf("toplayicilik becerisi: %d\n", *para);
-
-}
-
-void uyu(int* uyku_seviyesi, int* tokluk, int* su, int saat) {
-	if(*uyku_seviyesi > 100) {
-		printf("uyku seviyesi 100'den buyuk olamaz.\n");
-	}
-	/*else if (*uyku_seviyesi <= 20) {
-		printf("uyku seviyesi 20'nin altina düstü.\n");
-	}
-	else if (*uyku_seviyesi < 0) {
-		*uyku_seviyesi = 0;
-	}
-	else if (*uyku_seviyesi == 0) {
-		*can_degeri -= 10;
-	}*/											// bunları burada kontrol etmek mantıksız.
-	else {
-		*uyku_seviyesi += 10 * saat;
-		*tokluk -= 4 * saat;
-		*su -= 3 * saat;
-		if(*uyku_seviyesi > 100) {
-			*uyku_seviyesi = 100;
-		}
-	}
-	printf("uyku seviyesi: %d\n", *uyku_seviyesi);
-}
-void karizma(int* karizma_seviyesi, int miktar) {
-	if (*karizma_seviyesi > 25) {
-		printf("karizma degeri 25'den buyuk olamaz.\n");
-	}
-	else {
-		*karizma_seviyesi += miktar;
-		if (*karizma_seviyesi > 25) {
-			*karizma_seviyesi = 25;
-		}
-	}
-	printf("karizma seviyesi: %d", *karizma_seviyesi);
-}
-void can(int* saglik_degeri, int miktar) {
-	if (*saglik_degeri > 100) {
-		printf("saglik degeri 100'den buyuk olamaz.\n");
-	}
-	else {
-		*saglik_degeri += miktar;
-		if (*saglik_degeri > 100) {
-			*saglik_degeri = 100;
-		}
-	}
-}
-void tokluk(int* aclik_seviyesi, int* para, int* uyku, int miktar) {
-	int secim;
-	printf("acligi nasil gidermek istersiniz?\n1. ekmek ye (2 altin, +10 tokluk)\n2. yahni ye (10 altin, +50 tokluk)\n3. elma ye (1 altin, +5 tokluk)\n");
-	scanf("%d", &secim);
-	switch (secim) {
-		case 1:
-			*para -= 2 * miktar;
-			*aclik_seviyesi += 10 * miktar;
-			break;
-		case 2:
-			*para -= 10 * miktar;
-			*aclik_seviyesi += 50 * miktar;
-			break;
-		case 3:
-			*para -= 1 * miktar;
-			*aclik_seviyesi += 5 * miktar;
-		default:
-			printf("gecersiz islem yaptiniz.");
-	}
-	if (*aclik_seviyesi > 100) {
-		printf("aclik degeri 100'den buyuk olamaz.\n");
-	}
-	else {
-		*uyku -= 10 * miktar;
-		if (*aclik_seviyesi > 100) {
-			*aclik_seviyesi = 100;
-		}
-	}
-}
-void su_degeri(int* su_degeri, int* tokluk, int miktar) {
-	if (*su_degeri > 100) {
-		printf("su degeri 100'den buyuk olamaz.\n");
-	}
-	else {
-		*su_degeri += miktar;
-		*tokluk -= 10;		// su içmek acıktırır.
-		if (*su_degeri > 100) {
-			*su_degeri = 100;
-		}
-	}
-}
-
-void eglence_degeri(int* eglence_degeri, int* tokluk, int* uyku, int sure) {
-	if (*eglence_degeri > 100) {
-		printf("eglence degeri 100'den buyuk olamaz.\n");
-	}
-	else {
-		*eglence_degeri += sure * 10; 
-		*tokluk -= sure * 5;
-		*uyku -= sure * 5;
-		if (*eglence_degeri > 100) {
-			*eglence_degeri = 100;
-		}
-	}
-}
-
-void moral_degeri(int* moral_degeri, int miktar) {
-	if (*moral_degeri > 100) {
-		printf("moral degeri 100'den buyuk olamaz.\n");
-	}
-	else {
-		*moral_degeri += miktar;
-		if (*moral_degeri > 100) {
-			*moral_degeri = 100;
-		}
-	}
-}
-
-void hijyen(int* hijyen_seviyesi, int miktar) {
-	if (*hijyen_seviyesi > 100) {
-		printf("hijyen degeri 100'den buyuk olamaz.\n");
-	}
-	else {
-		*hijyen_seviyesi += miktar;
-		if (*hijyen_seviyesi > 100) {
-			*hijyen_seviyesi = 100;
-		}
-	}
-}
-void para(int* para_seviyesi, int miktar) {
-	*para_seviyesi += miktar;
-}
-void tecrube(int* tecrube_degeri, int miktar) {
-	if (*tecrube_degeri > 100) {
-		printf("tecrube degeri 100'den buyuk olamaz.\n");
-	}
-	else {
-		*tecrube_degeri += miktar;
-		if (*tecrube_degeri > 100) {
-			*tecrube_degeri = 100;
-		}
-	}
-	if (tecrube == 100) {
-		seviye_atla();
-	}
-}
-void guc(int* guc_degeri, int miktar) {
-	if (*guc_degeri > 25) {
-		printf("karizma degeri 25'den buyuk olamaz.\n");
-	}
-	else {
-		*guc_degeri += miktar;
-		if (*guc_degeri > 25) {
-			*guc_degeri = 25;
-		}
-	}
-	printf("karizma seviyesi: %d", *guc_degeri);
-}
-void ceviklik(int* ceviklik_degeri, int miktar) {
-	if (*ceviklik_degeri > 25) {
-		printf("karizma degeri 25'den buyuk olamaz.\n");
-	}
-	else {
-		*ceviklik_degeri += miktar;
-		if (*ceviklik_degeri > 25) {
-			*ceviklik_degeri = 25;
-		}
-	}
-	printf("karizma seviyesi: %d", *ceviklik_degeri);
-}
-void dayaniklilik(int* dayaniklilik_degeri, int miktar) {
-	if (*dayaniklilik_degeri > 25) {
-		printf("karizma degeri 25'den buyuk olamaz.\n");
-	}
-	else {
-		*dayaniklilik_degeri += miktar;
-		if (*dayaniklilik_degeri > 25) {
-			*dayaniklilik_degeri = 25;
-		}
-	}
-	printf("karizma seviyesi: %d", *dayaniklilik_degeri);
-}
-void toplayicilik_becerisi(int* toplama_becerisi, int miktar) {
-	if (*toplama_becerisi > 25) {
-		printf("karizma degeri 25'den buyuk olamaz.\n");
-	}
-	else {
-		*toplama_becerisi += miktar;
-		if (*toplama_becerisi > 25) {
-			*toplama_becerisi = 25;
-		}
-	}
-	printf("karizma seviyesi: %d", *toplayicilik_becerisi);
-
-}
-
 void kampa_git(Ozan* ozan, int* secim) {
+	int uyku_miktari;
 	if (secim == 1) {
 		printf("Kamp alanina gidiyorsunuz...\n");
 		kamp_alani_alt_secenekler();
@@ -374,8 +134,10 @@ void kampa_git(Ozan* ozan, int* secim) {
 			can(&ozan->can_degeri, 10);
 			tecrube(&ozan->tecrube_degeri, 10);
 			break;
-		case 3:												//Çadırına girip uyu.(uyku, guc, ceviklik, dayanıklılık, tokluk, su degeri)
-			uyu(&ozan->uyku_degeri, &ozan->can_degeri);
+		case 3:		
+			printf("ozan ne kadar uyusun: ");										//Çadırına girip uyu.(uyku, guc, ceviklik, dayanıklılık, tokluk, su degeri)
+			scanf("%d", &uyku_miktari);
+			uyu(&ozan->uyku_degeri, uyku_miktari);
 			guc(&ozan->guc_degeri, 10);
 			ceviklik(&ozan->ceviklik_degeri, 10);
 			dayaniklilik(&ozan->dayaniklilik_degeri, 10);
@@ -458,7 +220,7 @@ void hana_git(Ozan* ozan, int* secim) {
 	}
 }	
 
-void maceraya_atil(Ozan ozan, int* secim) {
+void maceraya_atil(Ozan* ozan, int* secim) {
 	if (secim == 4) {
 		printf("maceraya katiliyorsunuz...");
 		maceraya_atil_alt_secenekler();
@@ -504,3 +266,243 @@ void seviye_atla(Ozan* ozan) {
 		ozan->toplayicilik_becerisi_degeri = 0;
 	}
 }
+
+void menu_yazdir(int* secim) {
+	printf("**********MENU**********\n\n1-kamp alanina git\n2-sifahaneye git\n3-hana git\n4-maceraya katil\n5-seviye atla\n6-Durumu goster\n7-oyundan cik\n");
+	printf("menuden bir gorev seciniz");
+	scanf("%d", &secim);
+}
+void kamp_alani_alt_secenekler() {
+	printf("1. Kamp atesinin basinda calgi cal/sarki soyle.\n");
+	printf("2. Nehirde yikan.\n");
+	printf("3. cadirina girip uyu.\n");
+	printf("4. Koy meydanina don.\n");
+}
+void sifahaneye_git_alt_secenekler() {
+	printf("1. sifacidan yaralarini sarmasini iste.\n");
+	printf("2. sifacidan merhem yapip surmesini iste.\n");
+	printf("3. Koy meydanina don.\n");
+}
+void hana_git_alt_secenekler() {
+	printf("1. Yiyecek satin al ve ye.\n");
+	printf("2. icecek satin al, ic ve eglen.\n");
+	printf("3. Enstruman cal ve sarki soyle.\n");
+	printf("4. Koy meydanina don.\n");
+}
+void maceraya_atil_alt_secenekler() {
+	printf("1. Yakin cevreden sifali bitki topla ve avlan.\n");
+	printf("2. Ormani kesfe cik (kolay).\n");
+	printf("3. Kayaliklari kesfe cik (orta).\n");
+	printf("4. Vadiyi kesfe cik (zor).\n");
+	printf("5. Koy meydanina don.\n");
+}
+void durumu_goster(Ozan* ozan) {
+	printf("isim: %s\n", ozan->ozan_adi);
+	printf("calgi adi: %s\n", ozan->calgi_adi);
+	printf("para: %d\n", ozan->para_degeri);
+	printf("tecrube: %d\n", ozan->tecrube_degeri);
+	printf("can: %d\n", ozan->can_degeri);
+	printf("tokluk: %d\n", ozan->tokluk_degeri);
+	printf("su: %d\n", ozan->su_degeri);
+	printf("hijyen: %d\n", ozan->hijyen_degeri);
+	printf("uyku: %d\n", ozan->uyku_degeri);
+	printf("eglence: %d\n", ozan->eglence_degeri);
+	printf("moral: %d\n", ozan->moral_deger);
+	printf("guc: %d\n", ozan->guc_degeri);
+	printf("ceviklik: %d\n", ozan->ceviklik_degeri);
+	printf("dayaniklilik: %d\n", ozan->dayaniklilik_degeri);
+	printf("karizma: %d\n", ozan->karizma_degeri);
+	printf("toplayicilik becerisi: %d\n", ozan->toplayicilik_becerisi_degeri);
+}
+
+void uyu(Ozan* ozan, int saat) {
+	if(ozan->uyku_degeri > 100) {
+		printf("uyku seviyesi 100'den buyuk olamaz.\n");
+	}
+	/*else if (*uyku_seviyesi <= 20) {
+		printf("uyku seviyesi 20'nin altina düstü.\n");
+	}
+	else if (*uyku_seviyesi < 0) {
+		*uyku_seviyesi = 0;
+	}
+	else if (*uyku_seviyesi == 0) {
+		*can_degeri -= 10;
+	}*/											// bunları burada kontrol etmek mantıksız.
+	else {
+		ozan->uyku_degeri += 10 * saat;
+		ozan->tokluk_degeri -= 4 * saat;
+		ozan->su_degeri -= 3 * saat;
+		if(ozan->uyku_degeri > 100) {
+			ozan->uyku_degeri = 100;
+		}
+	}
+	printf("uyku seviyesi: %d\n", ozan->uyku_degeri);
+}
+void karizma(Ozan* ozan, int miktar) {
+	if (ozan->karizma_degeri > 25) {
+		printf("karizma degeri 25'den buyuk olamaz.\n");
+	}
+	else {
+		ozan->karizma_degeri += miktar;
+		if (ozan->karizma_degeri > 25) {
+			ozan->karizma_degeri = 25;
+		}
+	}
+	printf("karizma seviyesi: %d", ozan->karizma_degeri);
+}
+void can(Ozan* ozan, int miktar) {
+	if (ozan->can_degeri > 100) {
+		printf("saglik degeri 100'den buyuk olamaz.\n");
+	}
+	else {
+		ozan->can_degeri += miktar;
+		if (ozan->can_degeri > 100) {
+			ozan->can_degeri = 100;
+		}
+	}
+}
+void tokluk(Ozan* ozan, int miktar) {
+	int secim;
+	printf("acligi nasil gidermek istersiniz?\n1. ekmek ye (2 altin, +10 tokluk)\n2. yahni ye (10 altin, +50 tokluk)\n3. elma ye (1 altin, +5 tokluk)\n");
+	scanf("%d", &secim);
+	switch (secim) {
+		case 1:
+			ozan->para_degeri -= 2 * miktar;
+			ozan->tokluk_degeri += 10 * miktar;
+			break;
+		case 2:
+			ozan->para_degeri -= 10 * miktar;
+			ozan->tokluk_degeri += 50 * miktar;
+			break;
+		case 3:
+			ozan->para_degeri -= 1 * miktar;
+			ozan->tokluk_degeri += 5 * miktar;
+		default:
+			printf("gecersiz islem yaptiniz.");
+	}
+	if (ozan->tokluk_degeri > 100) {
+		printf("aclik degeri 100'den buyuk olamaz.\n");
+	}
+	else {
+		ozan->uyku_degeri -= 10 * miktar;
+		if (ozan->tokluk_degeri > 100) {
+			ozan->tokluk_degeri = 100;
+		}
+	}
+}
+void su_degeri(Ozan* ozan, int miktar) {
+	if (ozan->su_degeri > 100) {
+		printf("su degeri 100'den buyuk olamaz.\n");
+	}
+	else {
+		ozan->su_degeri += miktar;
+		ozan->tokluk_degeri -= 10;		// su içmek acıktırır.
+		if (ozan->su_degeri > 100) {
+			ozan->su_degeri = 100;
+		}
+	}
+}
+
+void eglence_degeri(Ozan* ozan, int sure) {
+	if (ozan->eglence_degeri > 100) {
+		printf("eglence degeri 100'den buyuk olamaz.\n");
+	}
+	else {
+		ozan->eglence_degeri += sure * 10; 
+		ozan->tokluk_degeri -= sure * 5;
+		ozan->uyku_degeri -= sure * 5;
+		if (ozan->eglence_degeri > 100) {
+			ozan->eglence_degeri = 100;
+		}
+	}
+}
+
+void moral_degeri(Ozan* ozan, int miktar) {
+	if (ozan->moral_deger > 100) {
+		printf("moral degeri 100'den buyuk olamaz.\n");
+	}
+	else {
+		ozan->moral_deger += miktar;
+		if (ozan->moral_deger > 100) {
+			ozan->moral_deger = 100;
+		}
+	}
+}
+
+void hijyen(Ozan* ozan, int miktar) {
+	if (ozan->hijyen_degeri > 100) {
+		printf("hijyen degeri 100'den buyuk olamaz.\n");
+	}
+	else {
+		ozan->hijyen_degeri += miktar;
+		if (ozan->hijyen_degeri > 100) {
+			ozan->hijyen_degeri = 100;
+		}
+	}
+}
+void para(Ozan* ozan, int miktar) {
+	ozan->para_degeri += miktar;
+}
+void tecrube(Ozan* ozan, int miktar) {
+	if (ozan->tecrube_degeri > 100) {
+		printf("tecrube degeri 100'den buyuk olamaz.\n");
+	}
+	else {
+		ozan->tecrube_degeri += miktar;
+		if (ozan->tecrube_degeri > 100) {
+			ozan->tecrube_degeri = 100;
+		}
+	}
+	if (tecrube == 100) {
+		seviye_atla(ozan);
+	}
+}
+void guc(Ozan* ozan, int miktar) {
+	if (ozan->guc_degeri > 25) {
+		printf("karizma degeri 25'den buyuk olamaz.\n");
+	}
+	else {
+		ozan->guc_degeri += miktar;
+		if (ozan->guc_degeri > 25) {
+			ozan->guc_degeri = 25;
+		}
+	}
+	printf("karizma seviyesi: %d", ozan->guc_degeri);
+}
+void ceviklik(Ozan* ozan, int miktar) {
+	if (ozan->ceviklik_degeri > 25) {
+		printf("karizma degeri 25'den buyuk olamaz.\n");
+	}
+	else {
+		ozan->ceviklik_degeri += miktar;
+		if (ozan->ceviklik_degeri > 25) {
+			ozan->ceviklik_degeri = 25;
+		}
+	}
+	printf("karizma seviyesi: %d", ozan->ceviklik_degeri);
+}
+void dayaniklilik(Ozan* ozan, int miktar) {
+	if (ozan->dayaniklilik_degeri > 25) {
+		printf("karizma degeri 25'den buyuk olamaz.\n");
+	}
+	else {
+		ozan->dayaniklilik_degeri += miktar;
+		if (ozan->dayaniklilik_degeri > 25) {
+			ozan->dayaniklilik_degeri = 25;
+		}
+	}
+	printf("karizma seviyesi: %d", ozan->dayaniklilik_degeri);
+}
+void toplayicilik_becerisi(Ozan* ozan, int miktar) {
+	if (ozan->toplayicilik_becerisi_degeri > 25) {
+		printf("karizma degeri 25'den buyuk olamaz.\n");
+	}
+	else {
+		ozan->toplayicilik_becerisi_degeri += miktar;
+		if (ozan->toplayicilik_becerisi_degeri > 25) {
+			ozan->toplayicilik_becerisi_degeri = 25;
+		}
+	}
+	printf("karizma seviyesi: %d", ozan->toplayicilik_becerisi_degeri);
+}
+
