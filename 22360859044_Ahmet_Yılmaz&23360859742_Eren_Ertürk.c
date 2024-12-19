@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 void menu_yazdir();
 void kamp_alani_alt_secenekler();
@@ -55,6 +56,7 @@ typedef struct Haydut {
 } Haydut;
 
 void main() {
+	Haydut* haydut;
 	Ozan ozan;
 	printf("Ozan'in adini giriniz: ");
 	gets(ozan.ozan_adi);
@@ -77,6 +79,7 @@ void main() {
 	ozan.dayaniklilik_degeri = 3;
 	ozan.karizma_degeri = 3;
 
+	srand(time(NULL));
 	int secim;
 	while (1) {
 		menu_yazdir(&secim);
@@ -87,7 +90,7 @@ void main() {
 
 		hana_git(&ozan, &secim);
 
-		maceraya_atil(&ozan, &secim);
+		maceraya_atil(&ozan, &haydut, &secim);
 		
 		if (secim == 5) {
 			durumu_goster(&ozan);
@@ -158,20 +161,20 @@ void sifahaneye_git(Ozan* ozan, int* secim) {
 		scanf("%d", &alt_secim);
 		switch (alt_secim) {
 		case 1:												// Şifacıdan yaralarını sarmasını iste.(can degeri, ceviklik, dayanıklılık, -para, guc, moral)
-			can(&ozan->can_degeri, 10);
+			can(&ozan->can_degeri, 14);
 			ceviklik(&ozan->ceviklik_degeri, 10);
 			dayaniklilik(&ozan->dayaniklilik_degeri, 10);
 			guc(&ozan->guc_degeri, 10);
 			para(&ozan->para_degeri, 10);
-			moral(&ozan->moral_degeri, 10);
+			moral(&ozan->moral_deger, 10);
 			break;
 		case 2:												// Şifacıdan merhem yapıp sürmesini iste.(can degeri, ceviklik, dayanıklılık, -para, guc, moral)
-			can(&ozan->can_degeri, 10);
+			can(&ozan->can_degeri, 21);
 			ceviklik(&ozan->ceviklik_degeri, 10);
 			dayaniklilik(&ozan->dayaniklilik_degeri, 10);
 			guc(&ozan->guc_degeri, 10);
 			para(&ozan->para_degeri, 10);
-			moral(&ozan->moral_degeri, 10);
+			moral(&ozan->moral_deger, 10);
 			break;
 		case 3:
 			menu_yazdir(&secim);
@@ -206,11 +209,11 @@ void hana_git(Ozan* ozan, int* secim) {
 			karizma(&ozan->karizma_degeri, 10);
 			break;
 		case 3:								//Enstrüman çal ve şarkı söyle. (karizma, tecrube, su degeri, tokluk, eglence, moral)
-			if (ozan->hijyen < 20) {
+			if (ozan->hijyen_degeri < 20) {
 				printf("hijyene onem vermediginiz icin handa sarki soyleyemezsiniz.");
 				break;
 			}
-			ozan->para_degeri = (10 + ((ozan->karizma_degeri) * (ozan->hijyen) / 100));
+			ozan->para_degeri = (10 + ((ozan->karizma_degeri) * (ozan->hijyen_degeri) / 100));
 			tecrube(&ozan->tecrube_degeri, 20);
 			karizma(&ozan->karizma_degeri, 10);
 		case 4:
@@ -220,7 +223,10 @@ void hana_git(Ozan* ozan, int* secim) {
 	}
 }	
 
-void maceraya_atil(Ozan* ozan, int* secim) {
+void maceraya_atil(Ozan* ozan, Haydut* haydut, int* secim) {
+	int kolay_haydut_ganimeti = 15 + (rand() % 10);
+	int orta_haydut_ganimeti = 30 + (rand() % 20);
+	int zor_haydut_ganimeti = 55 + (rand() % 20);
 	if (secim == 4) {
 		printf("maceraya katiliyorsunuz...");
 		maceraya_atil_alt_secenekler();
@@ -234,21 +240,24 @@ void maceraya_atil(Ozan* ozan, int* secim) {
 			tecrube(&ozan->tecrube_degeri, 10);
 			dayaniklilik(&ozan->dayaniklilik_degeri, 10);
 			ceviklik(&ozan->ceviklik_degeri, 10);
-			tokluk(&ozan->tokluk_degeri, );
+			tokluk(&ozan->tokluk_degeri, 10);
 			uyu(&ozan->uyku_degeri, 10);
 			guc(&ozan->guc_degeri, 10);
 			break;
 		case 2:													//  Ormanı keşfe çık (kolay). (tecrube, para)
-			tecrube(&ozan->tecrube_degeri, 10);
-			para(&ozan->para_degeri, 10);
+			haydut->ceviklik_degeri = 3;
+			haydut->dayaniklilik_degeri = 3;
+			haydut->guc_degeri = 3;
+			tecrube(&ozan->tecrube_degeri, 30);
+			para(&ozan->para_degeri, kolay_haydut_ganimeti);
 			break;
 		case 3:													// Kayalıkları keşfe çık (orta). (tecrube, para)
-			tecrube(&ozan->tecrube_degeri, 10);
-			para(&ozan->para_degeri, 10);
+			tecrube(&ozan->tecrube_degeri, 60);
+			para(&ozan->para_degeri, orta_haydut_ganimeti);
 			break;
 		case 4:													// Vadiyi keşfe çık (zor). (tecrube, para)
-			tecrube(&ozan->tecrube_degeri, 10);
-			para(&ozan->para_degeri, 10);
+			tecrube(&ozan->tecrube_degeri, 90);
+			para(&ozan->para_degeri, zor_haydut_ganimeti);
 			break;
 		case 5:
 			menu_yazdir(&secim);
@@ -259,11 +268,68 @@ void maceraya_atil(Ozan* ozan, int* secim) {
 
 void seviye_atla(Ozan* ozan) {
 	if (ozan->tecrube_degeri == 100) {
-		ozan->tecrube_degeri = 0;
-		ozan->dayaniklilik_degeri = 0;
-		ozan->guc_degeri = 0;
-		ozan->karizma_degeri = 0;
-		ozan->toplayicilik_becerisi_degeri = 0;
+		ozan->tecrube_degeri = 3;
+		ozan->dayaniklilik_degeri = 3;
+		ozan->guc_degeri = 3;
+		ozan->karizma_degeri = 3;
+		ozan->toplayicilik_becerisi_degeri = 3;
+	}
+	int secim, miktar, toplam_puan;
+	while (toplam_puan != 0){
+		printf("-----SEVIYE ATLAMA MENUSU-----\n\n");
+		printf("seviye atladiniz tebrikler! 5 puan kazandiniz. Puanlarinizi hangi becerilerde kullanmak istersiniz? (once artirmak istediginiz becerinin numarasini yazin sonra artirmak istediginiz miktari girin.)\n");
+		printf("1- tecrube\n2- dayaniklilik\n3- guc\n4- karizma\n5- toplayicilik becerisi\n");
+		scanf("%d", &secim);
+		switch(secim) {
+			case 1:
+				scanf("%d", &miktar);
+				if((miktar >= 0) && (miktar <= 5)){
+					ozan->tecrube_degeri += miktar;
+					toplam_puan -= miktar;
+				}
+				else 
+					printf("gecersiz deger girdiniz.");
+				break;
+			case 2:
+				scanf("%d", &miktar);
+				if((miktar >= 0) && (miktar <= 5)){
+					ozan->tecrube_degeri += miktar;
+					toplam_puan -= miktar;
+				}
+				else 
+					printf("gecersiz deger girdiniz.");
+				break;
+			case 3:
+				scanf("%d", &miktar);
+				if((miktar >= 0) && (miktar <= 5)){
+					ozan->tecrube_degeri += miktar;
+					toplam_puan -= miktar;
+				}
+				else 
+					printf("gecersiz deger girdiniz.");
+				break;
+			case 4:
+				scanf("%d", &miktar);
+				if((miktar >= 0) && (miktar <= 5)){
+					ozan->tecrube_degeri += miktar;
+					toplam_puan -= miktar;
+				}
+				else 
+					printf("gecersiz deger girdiniz.");
+				break;
+			case 5:
+				scanf("%d", &miktar);
+				if((miktar >= 0) && (miktar <= 5)){
+					ozan->tecrube_degeri += miktar;
+					toplam_puan -= miktar;
+				}
+				else 
+					printf("gecersiz deger girdiniz.");
+				break;
+			default:
+				printf("gecersiz islem yaptiniz.");
+				break;
+		}
 	}
 }
 
