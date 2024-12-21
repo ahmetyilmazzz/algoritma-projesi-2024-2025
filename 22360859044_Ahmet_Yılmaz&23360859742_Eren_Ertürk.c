@@ -228,7 +228,6 @@ void hana_git(Ozan* ozan, int* secim) {
 }	
 
 void maceraya_atil(Ozan* ozan, Haydut* haydut, int* secim) {
-	
 	double kolay_haydut_ganimeti = 15 + (rand() % 10);
 	double orta_haydut_ganimeti = 30 + (rand() % 20);
 	double zor_haydut_ganimeti = 55 + (rand() % 20);
