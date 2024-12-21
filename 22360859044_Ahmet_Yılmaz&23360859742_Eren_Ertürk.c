@@ -28,6 +28,9 @@ void hana_git(Ozan* ozan, int* secim);
 void maceraya_atil(Ozan* ozan, int* secim);
 //void oyundan_cik(int* secim);
 void seviye_atla(Ozan* ozan);
+void savas_becerileri(Ozan* ozan, Haydut* haydut);
+void savas(Ozan* ozan, Haydut* haydut);
+void ozanin_savas_secimi(Ozan* ozan, Haydut* Haydut);
 
 typedef struct Ozan {
 	char ozan_adi[20];
@@ -50,6 +53,7 @@ typedef struct Ozan {
 } Ozan;
 
 typedef struct Haydut {
+	int can_degeri;
 	int guc_degeri;
 	int ceviklik_degeri;
 	int dayaniklilik_degeri;
@@ -224,9 +228,14 @@ void hana_git(Ozan* ozan, int* secim) {
 }	
 
 void maceraya_atil(Ozan* ozan, Haydut* haydut, int* secim) {
-	int kolay_haydut_ganimeti = 15 + (rand() % 10);
-	int orta_haydut_ganimeti = 30 + (rand() % 20);
-	int zor_haydut_ganimeti = 55 + (rand() % 20);
+	
+	double kolay_haydut_ganimeti = 15 + (rand() % 10);
+	double orta_haydut_ganimeti = 30 + (rand() % 20);
+	double zor_haydut_ganimeti = 55 + (rand() % 20);
+	int random_sayi_sifali_bitki = rand() % 100;		// bu sayı şifalı bitki bulma şansını kontrol etmek için var 
+	int random_sayi_meyve = rand() % 100;		// bu sayı meyve bulma şansını kontrol etmek için var 
+	int random_hayvan_bulma = rand() % 100;
+	double sifali_bitki_bulma_sansi = (ozan->toplayicilik_becerisi_degeri * 4) / 100;
 	if (secim == 4) {
 		printf("maceraya katiliyorsunuz...");
 		maceraya_atil_alt_secenekler();
@@ -235,6 +244,15 @@ void maceraya_atil(Ozan* ozan, Haydut* haydut, int* secim) {
 		scanf("%d", &alt_secim);
 		switch (alt_secim) {
 		case 1:												   	// Yakın çevreden şifalı bitki topla ve avlan. (toplayıcılık becerisi, -can degeri, tecrube, -dayanıklılık, -ceviklik, -tokluk, -uyku, -guc)
+			if((sifali_bitki_bulma_sansi * 100) > random_sayi_sifali_bitki)
+				ozan->can_degeri += 10;
+				
+			if((sifali_bitki_bulma_sansi * 100) > random_sayi_meyve)
+				ozan->tokluk_degeri += 10;
+			
+			if((sifali_bitki_bulma_sansi * 100 / 2) > random_hayvan_bulma)
+				ozan->tokluk_degeri += 50;
+
 			toplayicilik_becerisi(&ozan->toplayicilik_becerisi_degeri, 10);
 			can(&ozan->can_degeri, 10);
 			tecrube(&ozan->tecrube_degeri, 10);
@@ -245,17 +263,29 @@ void maceraya_atil(Ozan* ozan, Haydut* haydut, int* secim) {
 			guc(&ozan->guc_degeri, 10);
 			break;
 		case 2:													//  Ormanı keşfe çık (kolay). (tecrube, para)
-			haydut->ceviklik_degeri = 3;
-			haydut->dayaniklilik_degeri = 3;
-			haydut->guc_degeri = 3;
+			haydut->guc_degeri = (rand() % 2) + 1;
+			haydut->dayaniklilik_degeri = (rand() % 2) + 4;
+			haydut->ceviklik_degeri = (rand() % 2) + 4;
+			savas_becerileri(ozan, haydut);
+			ozanin_savas_secimi(ozan, haydut);
 			tecrube(&ozan->tecrube_degeri, 30);
 			para(&ozan->para_degeri, kolay_haydut_ganimeti);
 			break;
 		case 3:													// Kayalıkları keşfe çık (orta). (tecrube, para)
+			haydut->guc_degeri = (rand() % 2) + 4;
+			haydut->dayaniklilik_degeri = (rand() % 2) + 4;
+			haydut->ceviklik_degeri = (rand() % 2) + 4;
+			savas_becerileri(ozan, haydut);
+			ozanin_savas_secimi(ozan, haydut);
 			tecrube(&ozan->tecrube_degeri, 60);
 			para(&ozan->para_degeri, orta_haydut_ganimeti);
 			break;
 		case 4:													// Vadiyi keşfe çık (zor). (tecrube, para)
+			haydut->guc_degeri = (rand() % 3) + 7;
+			haydut->dayaniklilik_degeri = (rand() % 3) + 7;
+			haydut->ceviklik_degeri = (rand() % 3) + 7;
+			savas_becerileri(ozan, haydut);
+			ozanin_savas_secimi(ozan, haydut);
 			tecrube(&ozan->tecrube_degeri, 90);
 			para(&ozan->para_degeri, zor_haydut_ganimeti);
 			break;
@@ -572,3 +602,50 @@ void toplayicilik_becerisi(Ozan* ozan, int miktar) {
 	printf("karizma seviyesi: %d", ozan->toplayicilik_becerisi_degeri);
 }
 
+void savas_becerileri(Ozan* ozan, Haydut* haydut) {
+	printf("%s'in savas becerileri\n", ozan->ozan_adi);
+	printf("guc degeri: %d\ndayaniklilik degeri: %d\nceviklik degeri: %d\n\n", ozan->guc_degeri, ozan->dayaniklilik_degeri, ozan->ceviklik_degeri);
+	printf("haydutun savas becerileri\n");
+	printf("guc degeri: %d\ndayaniklilik degeri: %d\nceviklik degeri: %d", haydut->guc_degeri, haydut->dayaniklilik_degeri, haydut->ceviklik_degeri);
+}
+
+void savas(Ozan* ozan, Haydut* haydut, int* ozanin_verdigi_hasar, int* ozanin_aldigi_hasar) {
+	while((ozan->can_degeri > 0) || (haydut->can_degeri > 0)) {
+		if(ozan->ceviklik_degeri > haydut->ceviklik_degeri) {
+			*ozanin_verdigi_hasar = ozan->guc_degeri * 4;
+		} else if(ozan->ceviklik_degeri < haydut->ceviklik_degeri) {
+			*ozanin_aldigi_hasar = (haydut->guc_degeri * 4) - (haydut->guc_degeri * 4 * 4 * ozan->dayaniklilik_degeri / 100 - 1);
+			ozan->can_degeri -= *ozanin_aldigi_hasar;
+		}
+	}
+}
+
+void ozanin_savas_secimi(Ozan* ozan, Haydut* haydut) {
+	int savasma_secimi;
+	int ozanin_aldigi_hasar;
+	int ozanin_verdigi_hasar;
+	int ozanin_kacma_ihtimali;
+	int random_ozanin_kacma_ihtimali;	// bu sayi ozanin kacabilme ihtimali için random oluşturulacaktır.
+	printf("1-savas\n2-kac\n");
+	scanf("%d", &savasma_secimi);
+	switch(savasma_secimi) {
+		case 1:
+			savas(ozan, haydut, &ozanin_verdigi_hasar, &ozanin_aldigi_hasar);
+			break;
+		case 2:
+			ozanin_kacma_ihtimali = 4 * ozan->ceviklik_degeri / 100;
+			random_ozanin_kacma_ihtimali = rand() % 100;
+			if((ozanin_kacma_ihtimali * 100) > random_ozanin_kacma_ihtimali) {
+				printf("ozan basariyl kacti");
+			} else {
+				savas(ozan, haydut, &ozanin_verdigi_hasar, &ozanin_aldigi_hasar);
+			}
+			break;
+		if(ozan->can_degeri == 0 || ozan->can_degeri < 0) {
+			printf("%s yenildi! Savas bitti.", ozan->ozan_adi);
+		}
+		if(haydut->can_degeri == 0 || haydut->can_degeri < 0) {
+			printf("haydut yenildi! Savas bitti");
+		}
+	}	
+}
