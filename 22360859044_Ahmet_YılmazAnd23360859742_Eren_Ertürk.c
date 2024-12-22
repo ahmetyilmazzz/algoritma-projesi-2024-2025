@@ -93,25 +93,21 @@ void main() {
 		}
 		else if(secim == 2) {
 			sifahaneye_git(ozan, &secim);
-			kampa_git(ozan, &secim);
 		}
 		else if(secim == 3) {
 			hana_git(ozan, &secim);
-			kampa_git(ozan, &secim);
 		}	
 		else if(secim == 4) {
 			maceraya_atil(ozan, haydut, &secim);
-			kampa_git(ozan, &secim);
 		}
 		else if (secim == 5) {
 			durumu_goster(ozan);
-			kampa_git(ozan, &secim);
 		}
-		// else if (secim == 6) {
-
-		// }
+		else if (secim == 6) {
+			durumu_goster(ozan);
+		}
 		else if (secim == 7) {
-			printf("Cikmak istediginizden emin misiniz? (E/H)");
+			printf("Cikmak istediginizden emin misiniz?\ncikmak icin tekrar 7'ye basin: ");
 			scanf("%d", &secim);
 			if (secim == 7)
 				break;
@@ -176,7 +172,7 @@ void sifahaneye_git(Ozan* ozan, int* secim) {
 			ceviklik(ozan, 10);
 			dayaniklilik(ozan, 10);
 			guc(ozan, 10);
-			para(ozan, 10);
+			para(ozan, -10);
 			moral_degeri(ozan, 10);
 			break;
 		case 2:												// Şifacıdan merhem yapıp sürmesini iste.(can degeri, ceviklik, dayanıklılık, -para, guc, moral)
@@ -184,7 +180,7 @@ void sifahaneye_git(Ozan* ozan, int* secim) {
 			ceviklik(ozan, 10);
 			dayaniklilik(ozan, 10);
 			guc(ozan, 10);
-			para(ozan, 10);
+			para(ozan, -20);
 			moral_degeri(ozan, 10);
 			break;
 		case 3:
@@ -203,7 +199,7 @@ void hana_git(Ozan* ozan, int* secim) {
 		scanf("%d", &alt_secim);
 		switch (alt_secim) {
 		case 1:								//Yiyecek satın al ve ye. (-para, can degeri, ceviklik, dayanıklılık, tokluk, guc, su degeri, eglence, moral)
-			para(ozan, 10);
+			para(ozan, -10);
 			tokluk(ozan, 10);
 			can(ozan, 10);
 			ceviklik(ozan, 10);
@@ -211,7 +207,7 @@ void hana_git(Ozan* ozan, int* secim) {
 			guc(ozan, 10);
 			break;
 		case 2:								//İçecek satın al, iç ve eğlen. (-para, can degeri, ceviklik, dayanıklılık, guc, karizma, su degeri, eglence, moral)
-			para(ozan, 10);
+			para(ozan, -10);
 			can(ozan, 10);
 			ceviklik(ozan, 10);
 			dayaniklilik(ozan, 10);
@@ -243,7 +239,7 @@ void maceraya_atil(Ozan* ozan, Haydut* haydut, int* secim) {
 	int random_hayvan_bulma = rand() % 100;
 	double sifali_bitki_bulma_sansi = (ozan->toplayicilik_becerisi_degeri * 4) / 100;
 	if (*secim == 4) {
-		printf("maceraya katiliyorsunuz...");
+		printf("maceraya katiliyorsunuz...\n");
 		maceraya_atil_alt_secenekler();
 		int alt_secim;
 		printf("nasil bir maceraya katilmak istiyorsunuz? ");
@@ -265,7 +261,7 @@ void maceraya_atil(Ozan* ozan, Haydut* haydut, int* secim) {
 			dayaniklilik(ozan, 10);
 			ceviklik(ozan, 10);
 			tokluk(ozan, 10);
-			uyu(ozan, 10);
+			uyu(ozan, -10);
 			guc(ozan, 10);
 			break;
 		case 2:													//  Ormanı keşfe çık (kolay). (tecrube, para)
